@@ -16,80 +16,16 @@
  */
 package org.apache.dolphinscheduler.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Date;
 
-/**
- * session
- */
 @Data
-@TableName("t_ds_session")
+@ToString
 public class Session {
-
-    /**
-     * id
-     */
-    @TableId(value="id", type=IdType.INPUT)
     private String id;
-
-    /**
-     * user id
-     */
     private int userId;
-
-    /**
-     * last login time
-     */
     private Date lastLoginTime;
-
-    /**
-     * user login ip
-     */
     private String ip;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Session{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", ip='" + ip + '\'' +
-                ", lastLoginTime=" + lastLoginTime +
-                '}';
-    }
 }

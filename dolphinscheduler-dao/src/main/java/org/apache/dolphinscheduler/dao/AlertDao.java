@@ -30,8 +30,6 @@ import org.apache.dolphinscheduler.dao.entity.ProcessInstance;
 import org.apache.dolphinscheduler.dao.entity.User;
 import org.apache.dolphinscheduler.dao.mapper.AlertMapper;
 import org.apache.dolphinscheduler.dao.mapper.UserAlertGroupMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 import java.util.Date;
@@ -39,8 +37,6 @@ import java.util.List;
 
 @Component
 public class AlertDao extends AbstractBaseDao {
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private AlertMapper alertMapper;
@@ -80,29 +76,28 @@ public class AlertDao extends AbstractBaseDao {
 
     /**
      * query user list by alert group id
-     * @param alerGroupId alerGroupId
+     * @param alertGroupId alertGroupId
      * @return user list
      */
-    public List<User> queryUserByAlertGroupId(int alerGroupId){
+    public List<User> queryUserByAlertGroupId(int alertGroupId){
 
-        return userAlertGroupMapper.listUserByAlertgroupId(alerGroupId);
+        return userAlertGroupMapper.listUserByAlertgroupId(alertGroupId);
     }
 
     /**
      * MasterServer or WorkerServer stoped
-     * @param alertgroupId alertgroupId
+     * @param alertGroupId alertGroupId
      * @param host host
      * @param serverType serverType
      */
-    public void sendServerStopedAlert(int alertgroupId,String host,String serverType){
+    public void sendServerStopedAlert(int alertGroupId,String host,String serverType){
         Alert alert = new Alert();
-        String content = String.format("[{'type':'%s','host':'%s','event':'server down','warning level':'serious'}]",
-                serverType, host);
+        String content = String.format("[{'type':'%s','host':'%s','event':'server down','warning level':'serious'}]", serverType, host);
         alert.setTitle("Fault tolerance warning");
         alert.setShowType(ShowType.TABLE);
         alert.setContent(content);
         alert.setAlertType(AlertType.EMAIL);
-        alert.setAlertGroupId(alertgroupId);
+        alert.setAlertGroupId(alertGroupId);
         alert.setCreateTime(new Date());
         alert.setUpdateTime(new Date());
         alertMapper.insert(alert);
@@ -114,7 +109,7 @@ public class AlertDao extends AbstractBaseDao {
      * @param processDefinition processDefinition
      */
     public void sendProcessTimeoutAlert(ProcessInstance processInstance, ProcessDefinition processDefinition){
-        int alertgroupId = processInstance.getWarningGroupId();
+        int alertGroupId = processInstance.getWarningGroupId();
         String receivers = processDefinition.getReceivers();
         String receiversCc = processDefinition.getReceiversCc();
         Alert alert = new Alert();
@@ -124,7 +119,7 @@ public class AlertDao extends AbstractBaseDao {
         alert.setShowType(ShowType.TABLE);
         alert.setContent(content);
         alert.setAlertType(AlertType.EMAIL);
-        alert.setAlertGroupId(alertgroupId);
+        alert.setAlertGroupId(alertGroupId);
         if (StringUtils.isNotEmpty(receivers)) {
             alert.setReceivers(receivers);
         }
@@ -138,20 +133,20 @@ public class AlertDao extends AbstractBaseDao {
 
     /**
      * task timeout warn
-     * @param alertgroupId alertgroupId
+     * @param alertGroupId alertgroupId
      * @param receivers receivers
      * @param receiversCc receiversCc
      * @param taskId taskId
      * @param taskName taskName
      */
-    public void sendTaskTimeoutAlert(int alertgroupId,String receivers,String receiversCc,int taskId,String taskName){
+    public void sendTaskTimeoutAlert(int alertGroupId,String receivers,String receiversCc,int taskId,String taskName){
         Alert alert = new Alert();
         String content = String.format("[{'id':'%d','name':'%s','event':'timeout','warnLevel':'middle'}]",taskId,taskName);
         alert.setTitle("Task Timeout Warn");
         alert.setShowType(ShowType.TABLE);
         alert.setContent(content);
         alert.setAlertType(AlertType.EMAIL);
-        alert.setAlertGroupId(alertgroupId);
+        alert.setAlertGroupId(alertGroupId);
         if (StringUtils.isNotEmpty(receivers)) {
             alert.setReceivers(receivers);
         }
@@ -173,11 +168,11 @@ public class AlertDao extends AbstractBaseDao {
 
     /**
      * list user information by alert group id
-     * @param alertgroupId alertgroupId
+     * @param alertGroupId alertGroupId
      * @return user list
      */
-    public List<User> listUserByAlertgroupId(int alertgroupId){
-        return userAlertGroupMapper.listUserByAlertgroupId(alertgroupId);
+    public List<User> listUserByAlertgroupId(int alertGroupId){
+        return userAlertGroupMapper.listUserByAlertgroupId(alertGroupId);
     }
 
 

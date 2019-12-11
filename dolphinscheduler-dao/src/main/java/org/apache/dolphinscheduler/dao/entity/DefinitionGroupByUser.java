@@ -16,47 +16,11 @@
  */
 package org.apache.dolphinscheduler.dao.entity;
 
-/**
- * count definition number group by user
- */
+import lombok.Data;
+
+@Data
 public class DefinitionGroupByUser {
-
-    /**
-     * user name
-     */
     private String userName;
-
-    /**
-     * user id
-     */
     private Integer userId;
-
-    /**
-     * count number
-     */
     private int count;
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 }
